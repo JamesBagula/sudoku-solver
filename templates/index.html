@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Sudoku Solver</h1>
+    <form id="sudoku-form" method="POST">
+        <table>
+            {% for i in range(9) %}
+            <tr>
+                {% for j in range(9) %}
+                <td><input type="number" name="cell-{{ i }}-{{ j }}" min="0" max="9"></td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Solve</button>
+        <button type="button" id="clear-button">Clear</button>
+    </form>
+    {% if solution %}
+    <h2>Solution:</h2>
+    <table id="solution-table" class="solution-table">
+        {% for row in solution %}
+        <tr>
+            {% for num in row %}
+            <td>{{ num }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    <button type="button" id="clear-solution-button">Clear Solution</button>
+    {% endif %}
+    <script>
+        document.getElementById("clear-button").addEventListener("click", function() {
+            document.querySelectorAll("input[type='number']").forEach(function(input) {
+                input.value = '';
+            });
+        });
+
+        // Function to clear solution table
+        document.getElementById("clear-solution-button").addEventListener("click", function() {
+            var solutionTable = document.getElementById("solution-table");
+            solutionTable.innerHTML = ''; // Clear the content of the solution table
+        });
+    </script>
+</body>
+</html>
